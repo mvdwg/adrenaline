@@ -1,0 +1,12 @@
+<div class="jumbotron">
+  <div>
+    <img src="http://placehold.it/100x100">
+    <button> 1 </button>
+  </div>
+
+  <div>
+    <img src="http://placehold.it/100x100">
+    <button> 2 </button>
+  </div>
+</div>
+
