@@ -12,6 +12,7 @@ defmodule Adrenaline do
       supervisor(Adrenaline.Repo, []),
       # Start the endpoint when the application starts
       supervisor(Adrenaline.Endpoint, []),
+      supervisor(Adrenaline.Presence, []),
       # Start your own worker by calling: Adrenaline.Worker.start_link(arg1, arg2, arg3)
       # worker(Adrenaline.Worker, [arg1, arg2, arg3]),
     ]
