@@ -1,11 +1,11 @@
 <div class="jumbotron">
   <div>
-    <img src="http://placehold.it/100x100">
+    <img id="img_1" style="width: 100px; height: 100px" src="http://placehold.it/100x100">
     <button> 1 </button>
   </div>
 
   <div>
-    <img src="http://placehold.it/100x100">
+    <img id="img_2" style="width: 100px; height: 100px" src="http://placehold.it/100x100">
     <button> 2 </button>
   </div>
 </div>

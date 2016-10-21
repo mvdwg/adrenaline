@@ -55,6 +55,7 @@ socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("room:1", {id: Math.round(Math.random()*100000)})
+let position = 0
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
@@ -70,5 +71,27 @@ channel.on("presence_diff", diff => {
   presences = Presence.syncDiff(presences, diff)
   console.log({users: Presence.list(presences)})
 })
+
+let showButton = document.getElementById("show")
+if (showButton) {
+  showButton.addEventListener("click", function() {
+    channel.push("new_images", {position: position})
+    position = position + 1
+  }, false)
+}
+
+channel.on("next_question", question => {
+  setImages(question);
+})
+
+function setImages(question) {
+  let img_1 = document.getElementById("img_1")
+  let img_2 = document.getElementById("img_2")
+
+  if (img_1 && img_2) {
+    img_1.src = question.img_1;
+    img_2.src = question.img_2;
+  }
+}
 
 export default socket
