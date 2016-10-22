@@ -21,6 +21,8 @@ defmodule Adrenaline.RoomChannel do
   def handle_in("submit_answer", message, socket) do
     answer = message["answer"]
 
+    GenServer.call(GameState, {:answer, %{player: socket.assigns.user_id, answer: answer}})
+
     broadcast! socket, "question_answered", %{player: socket.assigns.user_id, answer: answer}
 
     {:noreply, socket }
