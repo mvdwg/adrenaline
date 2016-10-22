@@ -55,7 +55,6 @@ socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("room:1", {id: Math.round(Math.random()*100000)})
-let position = 0
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
@@ -69,20 +68,50 @@ channel.on("presence_state", state => {
 // receive "presence_diff" from server, containing join/leave events
 channel.on("presence_diff", diff => {
   presences = Presence.syncDiff(presences, diff)
-  console.log({users: Presence.list(presences)})
+  if (document.getElementById('list-users')) {
+    displayUsers(Presence.list(presences))
+  }
 })
 
 let showButton = document.getElementById("show")
 if (showButton) {
   showButton.addEventListener("click", function() {
-    channel.push("new_images", {position: position})
-    position = position + 1
+    channel.push("new_images")
   }, false)
+
+  channel.on("question_answered", data => {
+    let li = document.getElementById(data.player)
+    li.appendChild(document.createTextNode(`-${data.answer}`));
+  })
 }
+
+let answerButtons = document.querySelectorAll(".answer")
+if (answerButtons.length) {
+  answerButtons.forEach(function(answerButton) {
+    answerButton.addEventListener("click", function() {
+      console.log("submit")
+      channel.push("submit_answer", {answer: this.innerText})
+    }, false)
+  });
+}
+
 
 channel.on("next_question", question => {
   setImages(question);
 })
+
+function displayUsers(presences) {
+  document.getElementById('list-users').innerHTML = '';
+
+  for (let presence of presences) {
+    let li = document.createElement('li');
+    li.id = presence.metas[0].id;
+    li.innerText = presence.metas[0].id;
+    document.getElementById('list-users').appendChild(li);
+
+    console.log(presence.metas[0].id);
+  }
+}
 
 function setImages(question) {
   let img_1 = document.getElementById("img_1")

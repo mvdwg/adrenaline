@@ -14,7 +14,7 @@ defmodule Adrenaline do
       supervisor(Adrenaline.Endpoint, []),
       supervisor(Adrenaline.Presence, []),
       # Start your own worker by calling: Adrenaline.Worker.start_link(arg1, arg2, arg3)
-      # worker(Adrenaline.Worker, [arg1, arg2, arg3]),
+      worker(Adrenaline.GameState, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

@@ -10,10 +10,18 @@ defmodule Adrenaline.RoomChannel do
   end
 
   def handle_in("new_images", message, socket) do
-    position = message["position"]
+    position = GenServer.call(GameState, {:increment})
     question = Enum.at(Game.questions, position)
 
     broadcast! socket, "next_question", question
+
+    {:noreply, socket }
+  end
+
+  def handle_in("submit_answer", message, socket) do
+    answer = message["answer"]
+
+    broadcast! socket, "question_answered", %{player: socket.assigns.user_id, answer: answer}
 
     {:noreply, socket }
   end

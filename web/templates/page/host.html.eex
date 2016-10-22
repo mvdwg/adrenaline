@@ -1,6 +1,6 @@
 <div class="jumbotron">
-  <div id="list-users">
-  </div>
+  <ul id="list-users">
+  </ul>
 
   <button id="show"> Show next question!!</button>
 </div>
