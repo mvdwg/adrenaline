@@ -54,7 +54,7 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("room:1", {id: Math.round(Math.random()*100000)})
+let channel = socket.channel("room:1", {id: window.location.search.split('=')[1]})
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
@@ -80,9 +80,10 @@ if (showButton) {
   }, false)
 
   channel.on("question_answered", data => {
-    let { position, player, answer } = data;
-    let li = document.getElementById(data.player)
-    li.appendChild(document.createTextNode(`-${data.position}/${data.answer}`));
+    console.log(data);
+    //let { position, player, answer } = data;
+    //let li = document.getElementById(data.player)
+    //li.appendChild(document.createTextNode(`-${data.position}/${data.answer}`));
   })
 }
 
