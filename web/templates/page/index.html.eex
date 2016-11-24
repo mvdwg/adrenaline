@@ -1,4 +1,5 @@
 <div class="jumbotron">
+  <p id="question"></p>
   <div>
     <img id="img_1" style="width: 100px; height: 100px" src="http://placehold.it/100x100">
     <button class="answer">1</button>

@@ -80,8 +80,9 @@ if (showButton) {
   }, false)
 
   channel.on("question_answered", data => {
+    let { position, player, answer } = data;
     let li = document.getElementById(data.player)
-    li.appendChild(document.createTextNode(`-${data.answer}`));
+    li.appendChild(document.createTextNode(`-${data.position}/${data.answer}`));
   })
 }
 
@@ -89,7 +90,6 @@ let answerButtons = document.querySelectorAll(".answer")
 if (answerButtons.length) {
   answerButtons.forEach(function(answerButton) {
     answerButton.addEventListener("click", function() {
-      console.log("submit")
       channel.push("submit_answer", {answer: this.innerText})
     }, false)
   });
@@ -114,9 +114,11 @@ function displayUsers(presences) {
 }
 
 function setImages(question) {
+  let q = document.getElementById("question");
   let img_1 = document.getElementById("img_1")
   let img_2 = document.getElementById("img_2")
 
+  q.innerText = question.question;
   if (img_1 && img_2) {
     img_1.src = question.img_1;
     img_2.src = question.img_2;
